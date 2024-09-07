@@ -1,0 +1,48 @@
+version: '3.7'
+services:
+  mysql-db:
+    image: mysql:8.2.0
+    container_name: mysql-db
+    restart: always
+    volumes:
+      - ./data:/var/lib/mysql
+    expose:
+      - 3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=db_test
+    networks:
+      - test_net
+
+  mysqld-exporter:
+    image: prom/mysqld-exporter
+    container_name: mysqld-exporter
+    restart: always
+    ports:
+      - 9104:9104
+    volumes:
+      - ./my.cnf:/.my.cnf
+    environment:
+      - collect.info_schema.tablestats=true
+      - collect.info_schema.userstats=true
+      - collect.info_schema.query_response_time=true
+      - collect.auto_increment.columns=true
+      - collect.binlog_size=true
+      - collect.perf_schema.eventsstatements=true
+      - collect.perf_schema.eventswaits=true
+      - collect.perf_schema.file_events=true
+      - collect.perf_schema.indexiowaits=true
+      - collect.perf_schema.tableiowaits=true
+      - collect.perf_schema.tablelocks=true
+      - collect.perf_schema.replication_group_member_stats=true
+    command:
+     - "--mysqld.username=root:123456"
+     - "--mysqld.address=mysql-db:3306"
+    depends_on:
+      - mysql-db
+    networks:
+      - test_net
+
+networks:
+  test_net:
+    driver: bridge
