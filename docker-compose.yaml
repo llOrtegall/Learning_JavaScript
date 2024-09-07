@@ -1,5 +1,36 @@
 version: '3.7'
 services:
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    restart: always
+    ports:
+      - 3000:3000
+    networks:
+      - test_net
+    depends_on:
+      - prometheus
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - grafana-data:/var/lib/grafana
+
+  node-exporter:
+    image: prom/node-exporter
+    container_name: node-exporter
+    restart: always
+    ports:
+      - 9100:9100
+    networks:
+      - test_net
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+      - /etc/hostname:/etc/nodename
+
   prometheus:
     image: prom/prometheus
     container_name: prometheus
@@ -19,8 +50,8 @@ services:
     restart: always
     volumes:
       - ./data:/var/lib/mysql
-    expose:
-      - 3306
+    ports:
+      - 3306:3306
     environment:
       - MYSQL_ROOT_PASSWORD=123456
       - MYSQL_DATABASE=db_test
@@ -49,7 +80,7 @@ services:
       - collect.perf_schema.tablelocks=true
       - collect.perf_schema.replication_group_member_stats=true
     command:
-     - "--mysqld.username=root:123456"
+     - "--mysqld.username=exporter:123456"
      - "--mysqld.address=mysql-db:3306"
     depends_on:
       - mysql-db
@@ -59,3 +90,7 @@ services:
 networks:
   test_net:
     driver: bridge
+
+volumes:
+  grafana-data:
+    driver: local
