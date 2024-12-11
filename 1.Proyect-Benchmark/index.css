@@ -1,4 +1,6 @@
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -8,4 +10,82 @@ body {
   color: #e6e6e6;
   margin: 0;
   padding: 16px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 1280px;
+  margin: 0 auto;
+
+  h2 {
+    font-size: 24px;
+    opacity: 0.1;
+    font-weight: 500;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.code {
+  background: #141414;
+  border: 1px solid #242424;
+  color: #ccc8c8;
+  font-family: monospace;
+  font-size: 12px;
+  padding: 8px;
+  resize: none;
+  width: 100%;
+  field-sizing: content;
+}
+
+.test-cases {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.test-case {
+  background: #1f1f1f;
+  display: flex;
+  flex-direction: column;
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    padding: 8px;
+    align-items: center;
+
+    .test-id {
+      border-radius: 50%;
+      background: #0f0f0f;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .code {
+      border-radius: 0 0 6px 6px;
+    }
+
+  }
+}
+
+.send-button {
+  border-radius: 6px;
+  background: rgba(255, 255, 255, .3);
+  border: 0;
+  color: white;
+  cursor: pointer;
+  padding: 6px 12px;
+  transition: background .3s ease;
+  width: fit-content;
+  &:hover {
+    background: rgba(255, 255, 255, .5);
+  }
 }

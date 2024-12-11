@@ -4,12 +4,55 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JS - Perf Bencharmk</title>
+  <title>JS - Perf Benchmark</title>
   <link rel="stylesheet" href="index.css">
 </head>
 
 <body>
-  JS - Perf Bencharmk
-  <script type="module" src="index.js" ></script>
+  <main class="container">
+    <h2>Global</h2>
+
+    <textarea id="global" class="code" rows="1">const data = [...Array(1000)].keys()</textarea>
+
+    <h2>test cases</h2>
+
+    <div class="test-cases">
+      <article class="test-case">
+        <header>
+          <span class="test-id">1</span>
+          <span class="ops">203,360 ops/s</span>
+        </header>
+        <textarea id="global" class="code" rows="1">data.find(x => x == 100)</textarea> 
+      </article>
+
+      <article class="test-case">
+        <header>
+          <span class="test-id">2</span>
+          <span class="ops">203,360 ops/s</span>
+        </header>
+        <textarea id="global" class="code" rows="1">data.find(x => x == 200)</textarea> 
+      </article>
+
+      <article class="test-case">
+        <header>
+          <span class="test-id">3</span>
+          <span class="ops">203,360 ops/s</span>
+        </header>
+        <textarea id="global" class="code" rows="1">data.find(x => x == 400)</textarea> 
+      </article>
+
+      <article class="test-case">
+        <header>
+          <span class="test-id">4</span>
+          <span class="ops">203,360 ops/s</span>
+        </header>
+        <textarea id="global" class="code" rows="1">data.find(x => x == 800)</textarea> 
+      </article>
+    </div>
+
+    <button class="send-button" id="send-button">Benchmark Code</button>
+  </main>
+  <script type="module" src="index.js"></script>
 </body>
+
 </html>
